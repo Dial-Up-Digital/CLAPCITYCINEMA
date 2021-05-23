@@ -2,7 +2,7 @@ import React from 'react';
 
 const twitchUserName = 'linkywolfe';
 const parent = process.env.NODE_ENV === 'production'
-    ? 'www.clapcitycinemas.com/'
+    ? 'www.clapcitycinemas.com'
     : 'localhost';
 
 function TwitchStream() {
