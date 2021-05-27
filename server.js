@@ -4,6 +4,9 @@ const app = require('express')();
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const next = require('next');
+const sslRedirect = require('heroku-ssl-redirect').default;
+
+app.use(sslRedirect());
 
 const dev = process.env.NODE_ENV !== 'production';
 const port = process.env.PORT || 3000;
