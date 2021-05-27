@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
+import { initGA, logPageView } from '../utils/analytics';
 
 const themeTypes = {
   LIGHT: 'light',
@@ -8,6 +9,15 @@ const themeTypes = {
 };
 
 class Layout extends PureComponent {
+  componentDidMount() {
+    if (!window.GA_INITIALIZED) {
+      initGA();
+      window.GA_INITIALIZED = true;
+    }
+
+    logPageView();
+  }
+
   render() {
     const { children, theme, nowShowing, isMobile } = this.props;
     return (
