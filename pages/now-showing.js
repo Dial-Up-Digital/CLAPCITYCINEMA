@@ -6,10 +6,10 @@ import Chat from '../components/Chat';
 import TwitchStream from '../components/TwitchStream';
 
 export default function NowShowing({ isLive }) {
-  useEffect(() => {
-    if (!isLive) {
-      window.location.href = '/';
-    }
+  useEffect(() => { 
+    // if (!isLive) {
+    //   window.location.href = '/';
+    // }
   });
 
   return (

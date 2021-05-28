@@ -5,6 +5,7 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const next = require('next');
 const sslRedirect = require('heroku-ssl-redirect').default;
+const marklar = require('marklar');
 
 app.use(sslRedirect());
 
@@ -18,14 +19,76 @@ const TWITCH_STREAMS_API = 'https://api.twitch.tv/kraken/streams';
 const { TWITCH_CLIENT_ID } = process.env;
 // fake DB
 const messages = [];
+const users = [];
+const message_queue = [];
+const message_queue_length = 10;
+
+// Refactor these out into separate module later
+const usernameAvailable = (users, newName) => {
+  if (users.indexOf(newName) > -1) {
+    // Username taken
+    return false;
+  }
+
+  return true;
+};
+
+const addMessageToQueue = (queue, message) => {
+  if (queue.length >= message_queue_length) {
+    queue.shift();
+  }
+  queue.push(message);
+};
+
+const getColor = () => {
+  const colors = ['#ddaedc', '#4cb397', '#ffd281', '#f6b40e', '#75b4be', '#f04673', '#251879'];
+  const index = Math.floor(Math.random() * (colors.length + 1));
+  return colors[index];
+};
 
 // socket.io server
 io.on('connection', (socket) => {
-  socket.emit('message', 'YO');
+  let name;
+  let color;
 
-  socket.on('message', (data) => {
-    messages.push(data);
-    socket.broadcast.emit('message', data);
+  socket.on('init', () => {
+    marklar.nameFile.rappers = './rapper-names.txt';
+    name = marklar.getName('rappers').split(' ')[0];
+    color = getColor();
+    users.push(name);
+    socket.emit('init', { users, messages: message_queue, name, color });
+    socket.broadcast.emit('user:join', { name, users });
+  });
+
+  socket.on('send:message', (message) => {
+    addMessageToQueue(message_queue, message);
+    socket.broadcast.emit('receive:message', {
+      user: message.user,
+      text: message.text,
+      color: message.color,
+      timestamp: Date.now(),
+    });
+  });
+
+  socket.on('change:username', (names) => {
+    const index = users.indexOf(names.oldName);
+    users.splice(index, 1);
+    users.push(names.newName);
+    socket.broadcast.emit('change:username', {
+      oldName: names.oldName,
+      newName: names.newName,
+    });
+  });
+
+  socket.on('disconnect', () => {
+    if (typeof name !== 'undefined') {
+      const index = users.indexOf(name);
+      users.splice(index, 1);
+      socket.broadcast.emit('user:left', {
+        name,
+        users,
+      });
+    }
   });
 });
 

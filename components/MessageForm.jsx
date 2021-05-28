@@ -16,7 +16,7 @@ function MessageForm({ socket }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(actions.sendMessage(socket, inputText));
+    dispatch(actions.sendMessage(socket, 'Test User', inputText, 'blue'));
     resetInputText();
   };
 

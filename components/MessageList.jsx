@@ -18,7 +18,7 @@ function MessageList() {
     <MessageList.Container ref={ref}>
       <MessageList.Messages>
         {messages.map((message) => (
-          <Message text={message} key={message} />
+          <Message text={message.text} key={message} />
         ))}
       </MessageList.Messages>
     </MessageList.Container>

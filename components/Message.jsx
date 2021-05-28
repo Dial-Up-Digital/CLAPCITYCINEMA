@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
 function Message({ user, timestamp, text }) {
+  console.log(user, timestamp, text);
   return (
     <div>
       <Message.Time>{timestamp}</Message.Time>

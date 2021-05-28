@@ -17,14 +17,25 @@ function Chat() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    socket.emit('init');
+
     return () => {
       socket.off('message');
     };
   }, []);
 
-  socket.on('message', (data) => {
+  socket.on('init', (data) => {
+    console.log("INITIALIZE");
+    dispatch(actions.initialize(data));
+  });
+
+  socket.on('receive:message', (data) => {
+    console.log('RECEIVE MESSAGE');
     dispatch(actions.receivedMessage(data));
   });
+
+  // socket.on('user:join', this._userJoined);
+  // socket.on('user:left', this._userLeft);
 
   return (
     <Chat.Container>

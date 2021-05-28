@@ -38,6 +38,7 @@
     "express": "^4.17.1",
     "heroku-ssl-redirect": "^0.1.1",
     "isomorphic-unfetch": "^3.0.0",
+    "marklar": "0.0.5",
     "next": "^9.4.2",
     "next-redux-wrapper": "^6.0.0",
     "next-useragent": "^2.1.2",
