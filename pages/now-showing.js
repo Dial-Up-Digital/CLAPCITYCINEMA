@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import Layout from '../components/Layout';
 import Chat from '../components/Chat';
 import TwitchStream from '../components/TwitchStream';
+import mediaQueries from '../utils/constants';
 
 export default function NowShowing({ isLive }) {
   useEffect(() => {
@@ -36,17 +37,35 @@ NowShowing.defaultProps = {
 
 NowShowing.Container = styled.div`
   display: flex;
-  padding: 64px;
-  height: 600px;
+  padding: 4rem;
+  height: 100%;
+  max-height: 37.5rem;
+
+  @media ${mediaQueries.mobile} {
+    align-items: center;
+    box-sizing: border-box;
+    padding: 2rem;
+    max-height: none;
+  }
 `;
 
 NowShowing.Stream = styled.div`
   flex-grow: 3;
-  margin-right: 10px;
+  height: 100%;
+
+  @media ${mediaQueries.chatBreakpoint} {
+    margin: 0;
+    width: 100%;
+  }
 `;
 
 NowShowing.Chat = styled.div`
   flex-grow: 1;
+  margin-left: 0.75rem;
+
+  @media ${mediaQueries.chatBreakpoint} {
+    display: none;
+  }
 `;
 
 NowShowing.getInitialProps = async () => {
