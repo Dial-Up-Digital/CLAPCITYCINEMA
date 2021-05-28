@@ -1,19 +1,24 @@
 import * as actionTypes from './actionTypes';
 
-export const initialize = ({ users, messages, name, color }) => (dispatch) => {
+export const initialize = ({ users, messages, username, color }) => (dispatch) => {
   // Set Users
   // Set Messages
   // Set Name
 
   const initialMessage = {
-    user: 'DIAL UP BOT',
+    username: 'DIAL UP BOT',
     text:
       "WELCOME TO THE DIAL UP RADIO CHATROOM. I'M ONLY GONNA SAY THIS ONCE SO FUCKING LISTEN. TYPE /setname __________ TO CHANGE YOUR NAME TO __________.\nTYPE /setcolor __________ TO CHANGE YOUR MESSAGE BUBBLE COLOR TO __________. \nIF YOU REALLY NEED ME TO REPEAT THIS TYPE /help (THOUGH THIS SHIT REALLY ISN'T THAT HARD GOD DAMN)",
     color,
     timestamp: Date.now(),
   };
 
-  console.log('INITIALIZE ACTION');
+  console.log('INITIALIZE ACTION', username);
+
+  dispatch({
+    type: actionTypes.SET_USERNAME,
+    username,
+  });
 
   dispatch({
     type: actionTypes.RECEIVED_MESSAGE,
@@ -22,9 +27,9 @@ export const initialize = ({ users, messages, name, color }) => (dispatch) => {
 };
 
 // eslint-disable-next-line import/prefer-default-export
-export const sendMessage = (socketInstance, user, text, color) => (dispatch) => {
+export const sendMessage = (socketInstance, username, text, color) => (dispatch) => {
   const message = {
-    user,
+    username,
     text,
     color,
     timestamp: Date.now(),
@@ -46,7 +51,7 @@ export const receivedMessage = (message) => (dispatch) =>
 
 export const userJoined = ({ userName, color }) => (dispatch) => {
   const userJoinedMessage = {
-    user: 'DIAL UP BOT',
+    username: 'DIAL UP BOT',
     text: userName + ' Joined',
     color,
     timestamp: Date.now(),
@@ -60,7 +65,7 @@ export const userJoined = ({ userName, color }) => (dispatch) => {
 
 export const userLeft = ({ userName, color }) => (dispatch) => {
   const userLeftMessage = {
-    user: 'DIAL UP BOT',
+    username: 'DIAL UP BOT',
     text: userName + ' Left',
     color,
     timestamp: Date.now(),

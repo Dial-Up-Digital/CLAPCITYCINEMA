@@ -2,14 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 
-function Message({ user, timestamp, text }) {
-  console.log(user, timestamp, text);
+function Message({ username, timestamp, text }) {
   return (
     <div>
       <Message.Time>{timestamp}</Message.Time>
       <Message.Bubble>
         <Message.User>
-          <span>{user}</span>
+          <span>{username}</span>
         </Message.User>
         <br />
         <Message.Text>{text}</Message.Text>
@@ -20,12 +19,12 @@ function Message({ user, timestamp, text }) {
 
 Message.propTypes = {
   text: PropTypes.string.isRequired,
-  user: PropTypes.string,
+  username: PropTypes.string,
   timestamp: PropTypes.string,
 };
 
 Message.defaultProps = {
-  user: 'user',
+  username: 'user',
   timestamp: '4:00PM',
 };
 

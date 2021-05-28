@@ -48,22 +48,23 @@ const getColor = () => {
 
 // socket.io server
 io.on('connection', (socket) => {
-  let name;
+  let username;
   let color;
 
   socket.on('init', () => {
+    console.log('SENT INIT MESSAGE');
     marklar.nameFile.rappers = './rapper-names.txt';
-    name = marklar.getName('rappers').split(' ')[0];
+    username = marklar.getName('rappers').split(' ')[0];
     color = getColor();
-    users.push(name);
-    socket.emit('init', { users, messages: message_queue, name, color });
-    socket.broadcast.emit('user:join', { name, users });
+    users.push(username);
+    socket.emit('init', { users, messages: message_queue, username, color });
+    socket.broadcast.emit('user:join', { username, users });
   });
 
   socket.on('send:message', (message) => {
     addMessageToQueue(message_queue, message);
     socket.broadcast.emit('receive:message', {
-      user: message.user,
+      username: message.username,
       text: message.text,
       color: message.color,
       timestamp: Date.now(),
@@ -81,11 +82,11 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    if (typeof name !== 'undefined') {
-      const index = users.indexOf(name);
+    if (typeof username !== 'undefined') {
+      const index = users.indexOf(username);
       users.splice(index, 1);
       socket.broadcast.emit('user:left', {
-        name,
+        username,
         users,
       });
     }

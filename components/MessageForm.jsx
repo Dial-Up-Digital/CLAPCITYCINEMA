@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../state/actions';
 
 function MessageForm({ socket }) {
   const dispatch = useDispatch();
+  const username = useSelector((state) => state.chat.username);
   const [inputText, setInputText] = useState('');
 
   const resetInputText = () => setInputText('');
@@ -16,7 +17,7 @@ function MessageForm({ socket }) {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(actions.sendMessage(socket, 'Test User', inputText, 'blue'));
+    dispatch(actions.sendMessage(socket, username, inputText, 'blue'));
     resetInputText();
   };
 

@@ -25,7 +25,7 @@ function Chat() {
   }, []);
 
   socket.on('init', (data) => {
-    console.log("INITIALIZE");
+    console.log("INITIALIZE", data);
     dispatch(actions.initialize(data));
   });
 
