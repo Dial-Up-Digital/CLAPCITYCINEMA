@@ -19,9 +19,6 @@ export default function NowShowing({ isLive }) {
         <NowShowing.Stream>
           <TwitchStream />
         </NowShowing.Stream>
-        <NowShowing.Chat>
-          <Chat />
-        </NowShowing.Chat>
       </NowShowing.Container>
     </Layout>
   );
