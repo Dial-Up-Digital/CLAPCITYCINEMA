@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import { mediaQueries } from '../utils/constants';
+import mediaQueries from '../utils/constants';
 
 function Header() {
   return (

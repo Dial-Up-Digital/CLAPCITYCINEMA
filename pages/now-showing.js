@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Layout from '../components/Layout';
 import Chat from '../components/Chat';
 import TwitchStream from '../components/TwitchStream';
-import { mediaQueries } from '../utils/constants';
+import mediaQueries from '../utils/constants';
 
 export default function NowShowing({ isLive }) {
   useEffect(() => {
