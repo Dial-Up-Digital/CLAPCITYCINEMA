@@ -1,35 +1,41 @@
 import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
-import PropTypes from 'prop-types';
+import { mediaQueries } from '../utils/constants';
 
-function Header({ isMobile }) {
+function Header() {
   return (
     <Header.Container>
       <Link href="/">
-        <Header.Logo src="/CCCLogo.png" isMobile={isMobile} alt="Clap City Cinema Logo" />
+        <Header.Logo src="/CCCLogo.png" alt="Clap City Cinema Logo" />
       </Link>
     </Header.Container>
   );
 }
 
-Header.propTypes = {
-  isMobile: PropTypes.bool.isRequired,
-};
-
 Header.Container = styled.div`
   display: flex;
-  padding-left: 25px;
-  padding-top: 25px;
-  height: 80px;
+  padding: 4rem 0 0 4rem;
+  height: 5rem;
   align-items: center;
+
+  @media ${mediaQueries.mobile} {
+    padding: 2rem 0 0 0;
+    justify-content: center;
+  }
 `;
 
 Header.Logo = styled.img`
   position: relative;
-  height: ${(p) => (p.isMobile ? 'auto' : '100%')};
+  height: 100%;
   cursor: pointer;
   z-index: 3;
+
+  @media ${mediaQueries.mobile} {
+    height: auto;
+    max-height: 100%;
+    max-width: 70%;
+  }
 `;
 
 export default Header;

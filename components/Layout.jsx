@@ -19,10 +19,10 @@ class Layout extends PureComponent {
   }
 
   render() {
-    const { children, theme, nowShowing, isMobile } = this.props;
+    const { children, theme, nowShowing } = this.props;
     return (
       <div className="page">
-        <Header isMobile={isMobile} />
+        <Header />
         <div className="body">{children}</div>
         <style jsx global>
           {`
