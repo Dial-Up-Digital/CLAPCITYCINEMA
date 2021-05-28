@@ -21,6 +21,11 @@ export const initialize = ({ users, messages, username, color }) => (dispatch) =
   });
 
   dispatch({
+    type: actionTypes.SET_USERS,
+    users,
+  });
+
+  dispatch({
     type: actionTypes.RECEIVED_MESSAGE,
     message: initialMessage,
   });
@@ -49,30 +54,40 @@ export const receivedMessage = (message) => (dispatch) =>
     message,
   });
 
-export const userJoined = ({ userName, color }) => (dispatch) => {
+export const userJoined = ({ username, users }) => (dispatch) => {
   const userJoinedMessage = {
     username: 'DIAL UP BOT',
-    text: userName + ' Joined',
-    color,
+    text: username + ' Joined',
+    color: '#d3d3d3',
     timestamp: Date.now(),
   };
 
   dispatch({
+    type: actionTypes.SET_USERS,
+    users,
+  });
+
+  dispatch({
     type: actionTypes.RECEIVED_MESSAGE,
-    userJoinedMessage,
+    message: userJoinedMessage,
   });
 };
 
-export const userLeft = ({ userName, color }) => (dispatch) => {
+export const userLeft = ({ username, users }) => (dispatch) => {
   const userLeftMessage = {
     username: 'DIAL UP BOT',
-    text: userName + ' Left',
-    color,
+    text: username + ' Left',
+    color: '#d3d3d3',
     timestamp: Date.now(),
   };
 
   dispatch({
+    type: actionTypes.SET_USERS,
+    users,
+  });
+
+  dispatch({
     type: actionTypes.RECEIVED_MESSAGE,
-    userLeftMessage,
+    message: userLeftMessage,
   });
 };

@@ -52,7 +52,6 @@ io.on('connection', (socket) => {
   let color;
 
   socket.on('init', () => {
-    console.log('SENT INIT MESSAGE');
     marklar.nameFile.rappers = './rapper-names.txt';
     username = marklar.getName('rappers').split(' ')[0];
     color = getColor();
@@ -83,6 +82,7 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     if (typeof username !== 'undefined') {
+      socket.disconnect();
       const index = users.indexOf(username);
       users.splice(index, 1);
       socket.broadcast.emit('user:left', {

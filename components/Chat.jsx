@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import io from 'socket.io-client';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import TitleBar from './TitleBar';
 import MessageForm from './MessageForm';
 import MessageList from './MessageList';
@@ -15,12 +15,13 @@ const socket = io(socketURL);
 
 function Chat() {
   const dispatch = useDispatch();
+  const users = useSelector((state) => state.chat.users);
 
   useEffect(() => {
     socket.emit('init');
 
     return () => {
-      socket.off('message');
+      socket.offAny();
     };
   }, []);
 
@@ -34,12 +35,17 @@ function Chat() {
     dispatch(actions.receivedMessage(data));
   });
 
-  // socket.on('user:join', this._userJoined);
-  // socket.on('user:left', this._userLeft);
+  socket.on('user:join', (data) => {
+    dispatch(actions.userJoined(data));
+  });
+
+  socket.on('user:left', (data) => {
+    dispatch(actions.userLeft(data));
+  });
 
   return (
     <Chat.Container>
-      <TitleBar />
+      <TitleBar onlineUserCount={users.length} />
       <MessageList />
       <MessageForm socket={socket} />
     </Chat.Container>
